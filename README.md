@@ -1,0 +1,1 @@
+This is a first encounter with VueJS. It will contain 5 projects (hopefully) from a course at udemy.com.
