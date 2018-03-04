@@ -1,0 +1,24 @@
+{
+  "name": "vuejs",
+  "version": "1.0.0",
+  "description": "This is a first encounter with VueJS. It will contain 5 projects (hopefully) from a course at udemy.com.",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShockwaVee/vuejs_course.git"
+  },
+  "author": "Davor Tvoric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShockwaVee/vuejs_course/issues"
+  },
+  "homepage": "https://github.com/ShockwaVee/vuejs_course#readme"
+}
