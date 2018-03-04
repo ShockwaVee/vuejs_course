@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,56 @@
     <title>Notemaster</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
+
 <body>
     <div id="app">
         <h3>{{title}}</h3>
-    </div>    
+        <form>
+            <label>Note title</label>
+            <br>
+            <input type="text" v-model="note.title">
+            <br>
+            <label>Note text</label>
+            <br>
+            <textarea type="text" v-model="note.text"></textarea>
+            <br>
+            <button type="button" @click="addNote">Save</button>
+        </form>
+        <div>
+            <div v-for="(note, index) in notes">
+                <h4>{{note.title}}</h4>
+                <p>{{note.date}}</p>
+                <p>{{note.text}}</p>
+                <button @click="removeNote(index)">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     let app = new Vue({
         el: '#app',
-        data:{
-            title: 'Notemaster'
+        data: {
+            title: 'Notemaster',
+            note: {
+                title: '',
+                text: ''
+            },
+            notes: [],
+        },
+        methods: {
+            addNote() {
+                let noteObject = {
+                    'title': this.note.title,
+                    'text': this.note.text,
+                    'date': new Date(Date.now()).toLocaleString()
+                }
+                this.notes.push(noteObject);
+            },
+            removeNote(index){
+                this.notes.splice(index, 1);
+            }
         }
     })
 </script>
+
 </html>
