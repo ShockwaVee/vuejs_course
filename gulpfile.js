@@ -4,7 +4,10 @@ let less = require('gulp-less');
 
 gulp.task('less', function(){
     return gulp.src('./Applications/Notemaster/style.less')
-    .pipe(less())
+    .pipe(less().on('error', function(err){
+        console.log(err);
+        this.emit('end');
+    }))
     .pipe(gulp.dest('./Applications/Notemaster'))
     .pipe(browserSync.reload({
         stream: true
@@ -18,5 +21,5 @@ gulp.task('serve', function(){
         }
     })
     gulp.watch("./Applications/Notemaster/*.less", ['less']);
-    gulp.watch("./Applications/Notemaster/*.index").on("change", browserSync.reload);
+    gulp.watch("./Applications/Notemaster/*.html").on("change", browserSync.reload);
 });
