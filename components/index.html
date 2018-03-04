@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <counter v-bind:add-num="5"></counter>
+    </div>
+    <script>
+        let counter = Vue.component('counter', {
+            template:`
+            <div>
+            <p>Counter state: {{this.counter}}</p>
+            <button @click="increment">Increase counter by {{this.addNum}}</button>
+            </div>
+            `,
+            props:{
+                addNum:{
+                    type: Number,
+                    default: 1
+                }
+            },
+            data(){
+                {
+                    return {
+                        counter: 0
+                    }
+                }
+            },
+            methods:{
+                increment(){
+                    this.counter += this.addNum;
+                }
+            }
+            });
+
+        let app = new Vue({
+            el: '#app',
+            components:{
+                counter
+            }
+        });
+    </script>
+</body>
+</html>
