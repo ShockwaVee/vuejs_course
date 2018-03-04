@@ -1,0 +1,19 @@
+#app {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 20% auto;
+  grid-template-areas: "header header" "form notes";
+}
+h3 {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 3em;
+  margin-top: 0px;
+  background: #a0a4b8;
+  grid-area: header;
+}
+form {
+  grid-area: form;
+}
+.notes-container {
+  grid-area: notes;
+}
