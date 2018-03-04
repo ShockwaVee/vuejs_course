@@ -5,9 +5,9 @@ let browserSync = require('browser-sync').create();
 gulp.task('serve', function(){
     browserSync.init({
         server: {
-            baseDir: 'Introduction/hooks'
+            baseDir: 'Applications/Notemaster'
         }
     })
 
-    gulp.watch("./**/*.*").on("change", browserSync.reload);
+    gulp.watch("./Applications/Notemaster/*.*").on("change", browserSync.reload);
 });
