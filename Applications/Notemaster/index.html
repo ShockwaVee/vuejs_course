@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notemaster</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <h3>
+            <i class="fas fa-sticky-note"></i>{{title}}</h3>
+        <form>
+            <input placeholder="Write the note's title here" type="text" v-model="note.title" ref="title">
+            <select v-model="note.category">
+                <option v-for="category in categories" v-bind:value="category">{{capitalise(category)}}</option>
+            </select>
+            <select v-model="note.priority">
+                <option v-for="priority in priorities" v-bind:value="priority">{{capitalise(priority)}}</option>
+            </select>
+            <textarea placeholder="Write the note's text here" type="text" v-model="note.text" ref="text"></textarea>
+            <button type="button" @click="addNote">
+                <i class="far fa-save"></i>Save</button>
+        </form>
+        <div class="notes-container">
+            <div v-if="notes.length !== 0" class="filter">
+                <div id="buttons">
+                    <button @click="filterNotes('all')">All</button>
+                    <button @click="filterNotes(category)" v-for="category in categories">{{capitalise(category)}}</button>
+                </div>
+                <i class="fas fa-filter"></i>
+
+            </div>
+            <p class="no-notes" v-if="notes.length === 0 ">You don't have any notes added. Add some to see them here!</p>
+            <div class="single-note" v-bind:class="note.category" v-for="(note, index) in shownNotes">
+                <h4>{{note.title}}</h4>
+                <p class="date">{{note.date}}</p>
+                <p class="priority" v-bind:class="note.priority">Priority:
+                    <span>{{note.priority.toUpperCase()}}</span>
+                </p>
+                <p class="text">{{note.text}}</p>
+
+                <button @click="removeNote(index)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            title: 'Notemaster 3000',
+            note: {
+                title: '',
+                category: 'work',
+                priority: 'low',
+                text: ''
+            },
+            notes: localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
+            shownNotes: localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
+            categories: ['work', 'random', 'buy'],
+            currentCategory: 'all',
+            priorities: ['high', 'medium', 'low']
+        },
+        methods: {
+            addNote() {
+                let title = this.note.title.trim();
+                let text = this.note.text.trim();
+                if (title !== '' && text !== '') {
+                    this.$refs.title.classList.remove('required');
+                    this.$refs.text.classList.remove('required');
+                    let noteObject = {
+                        'title': this.note.title.trim(),
+                        'category': this.note.category,
+                        'priority': this.note.priority,
+                        'text': this.note.text.trim(),
+                        'date': new Date(Date.now()).toLocaleString()
+                    }
+                    this.notes.push(noteObject);
+                    localStorage.setItem('notes', JSON.stringify(this.notes));
+                    if (this.currentCategory === 'all' || this.currentCategory === this.note.category) {
+                        this.shownNotes.push(noteObject);
+                    }
+                    this.note.title = "";
+                    this.note.category = "work";
+                    this.priority = "low";
+                    this.note.text = "";
+                }else{
+                    if(title === '') this.$refs.title.classList.add('required');
+                    if(text === '') this.$refs.text.classList.add('required');
+                }
+            },
+            removeNote(index) {
+                this.notes.splice(index, 1);
+                localStorage.setItem('notes', JSON.stringify(this.notes));
+                this.filterNotes(this.currentCategory);
+            },
+            capitalise(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            },
+            filterNotes(category) {
+                this.currentCategory = category;
+                if (this.currentCategory === 'all') {
+                    //give the shownNotes array a copy of the notes array, not that exact array
+                    this.shownNotes = this.notes.slice(0);
+                    return;
+                }
+                this.shownNotes = this.notes.filter(note => note.category === category);
+            },
+            getNotesFromStorage() {
+                return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
+            }
+        }
+    })
+</script>
+
+</html>
