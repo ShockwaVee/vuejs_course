@@ -37,7 +37,7 @@ form {
     padding: 0px 20px;
     grid-area: form;
     display: grid;
-    grid-template-rows: 30px 25px 250px 50px;
+    grid-template-rows: 30px 25px 25px 250px 50px;
     grid-row-gap: 6px;
     font-family: 'Titillium Web', sans-serif;
     background: #003459;
@@ -162,9 +162,22 @@ form {
             margin-top: -6px;
             color: white;
         }
+        .priority{
+            color:white;
+            float: right;
+            &.low span{
+                color: #30b43b;
+            }
+            &.medium span{
+                color: #efe03f;
+            }
+            &.high span{
+                color: #cb3333;
+            }
+        }
         .date {
             color: #d1d1d1;
-            ;
+            display: inline-block;
         }
         button {
             position: absolute;

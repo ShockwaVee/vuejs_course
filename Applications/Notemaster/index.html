@@ -20,6 +20,9 @@
             <select v-model="note.category">
                 <option v-for="category in categories" v-bind:value="category">{{capitalise(category)}}</option>
             </select>
+            <select v-model="note.priority">
+                    <option v-for="priority in priorities" v-bind:value="priority">{{capitalise(priority)}}</option>
+                </select>
             <textarea placeholder="Write the note's text here" type="text" v-model="note.text"></textarea>
             <button type="button" @click="addNote"><i class="far fa-save"></i>Save</button>
         </form>
@@ -36,7 +39,9 @@
             <div class="single-note" v-bind:class="note.category" v-for="(note, index) in shownNotes">
                 <h4>{{note.title}}</h4>
                 <p class="date">{{note.date}}</p>
+                <p class="priority" v-bind:class="note.priority">Priority: <span>{{note.priority.toUpperCase()}}</span></p>
                 <p class="text">{{note.text}}</p>
+                
                 <button @click="removeNote(index)"><i class="fas fa-times"></i></button>
             </div>
         </div>
@@ -50,28 +55,34 @@
             note: {
                 title: '',
                 category: 'work',
+                priority: 'low',
                 text: ''
             },
-            notes: [],
-            shownNotes: [],
+            notes: localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
+            shownNotes: localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
             categories: ['work', 'random', 'buy'],
-            currentCategory: 'all'
+            currentCategory: 'all',
+            priorities: ['high', 'medium', 'low']
         },
         methods: {
             addNote() {
                 let noteObject = {
                     'title': this.note.title,
                     'category': this.note.category,
+                    'priority': this.note.priority,
                     'text': this.note.text,
                     'date': new Date(Date.now()).toLocaleString()
                 }
                 this.notes.push(noteObject);
+                localStorage.setItem('notes', JSON.stringify(this.notes));
                 if(this.currentCategory === 'all' || this.currentCategory === this.note.category){
                     this.shownNotes.push(noteObject);
                 }
             },
             removeNote(index){
                 this.notes.splice(index, 1);
+                localStorage.setItem('notes', JSON.stringify(this.notes));
+                this.filterNotes(this.currentCategory);
             },
             capitalise(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -84,6 +95,9 @@
                     return;
                 }
                 this.shownNotes = this.notes.filter(note => note.category === category);
+            },
+            getNotesFromStorage(){
+                return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
             }
         }
     })
