@@ -54,6 +54,9 @@ form {
         &:focus {
             border-bottom: 3px solid #00a8e8;
         }
+        &.required{
+            border-bottom: 3px solid #cb3333;
+        }
     }
     select {
         background: #00a8e8;
@@ -81,6 +84,9 @@ form {
         margin-top: 4px;
         &:focus {
             border: 3px solid #00a8e8;
+        }
+        &.required{
+            border: 3px solid #cb3333;
         }
     }
     button {
@@ -188,7 +194,7 @@ form {
             padding: 0;
             margin: 0;
             padding-right: 8px;
-            padding-top: 8px;
+            padding-top: 3px;
             cursor: pointer;
             opacity: 0;
             transition: all ease .2s;
