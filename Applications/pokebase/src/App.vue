@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <h3>{{title}}</h3>
+    <div class="characters-wrapper">
         <character :id="id" :key="id" v-for="id in initial_ids"/>
+    </div>
   </div>
 </template>
 
@@ -12,7 +14,7 @@ export default {
   data() {
     return {
       title: "Generate your team",
-      initial_ids: [1, 4, 7]
+      initial_ids: [1, 4, 7, 10]
     };
   },
   components: {
@@ -35,6 +37,11 @@ body {
     margin-top: 5px;
     margin-bottom: 10px;
   }
+}
+
+.characters-wrapper {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
 
