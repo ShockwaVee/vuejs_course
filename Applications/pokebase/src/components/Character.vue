@@ -30,7 +30,7 @@ export default {
     fetchPokemon(id) {
       this.isLoading = true;
       let interval = setInterval(()=>{
-        if(this.dots.length>2) this.dots = '';
+        if(this.dots.length>2) {this.dots = ''; return;};
         this.dots += '.';
       }, 1000)
       fetch("https://pokeapi.co/api/v2/pokemon/" + id + "/", {
