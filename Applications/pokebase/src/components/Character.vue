@@ -30,7 +30,7 @@ export default {
     fetchPokemon(id) {
       this.isLoading = true;
       let interval = setInterval(()=>{
-        if(this.dots.length>2) {this.dots = ''; return;};
+        if(this.dots.length>2) {this.dots = ''; return; };
         this.dots += '.';
       }, 1000)
       fetch("https://pokeapi.co/api/v2/pokemon/" + id + "/", {
@@ -92,6 +92,7 @@ export default {
   background: #e63946;
   border: 2px solid #1d3557;
   border-radius: 11px;
+  cursor: pointer;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 25px 93px 36px 30px 30px 30px;
