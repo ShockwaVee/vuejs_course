@@ -1,14 +1,18 @@
 <template>
-<div class="single-char" @click="switchPokemon">
-  <h4 class="name">{{capitalise(character.name)}}</h4>
-  <img class="image" v-bind:src="character.sprites.front_default">
-  <div class="types"><span v-for="(type, index) in character.types" :key="index" class="type">{{type.type.name}}</span></div>
-  <h5 class="hp-label">HP</h5>
-  <h5 class="hp-value" v-for="(stat, index) in character.stats" :key="index" v-if="stat.stat.name === 'hp'">{{stat.base_stat}}</h5>
-  <h5 class="weight-label">Weight</h5>
-  <h5 class="weight-value">{{character.weight}}</h5>
-  <h5 class="height-label">Height</h5>
-  <h5 class="height-value">{{character.height}}</h5>
+<div class="wrapper">
+  <div v-bind:style="{ display: isLoading ? 'none': '' }" class="single-char"
+       @click="switchPokemon">
+    <h4 v-if="character.name" class="name">{{capitalize(character.name)}}</h4>
+    <img v-if="character.sprites" class="image" v-bind:src="character.sprites.front_default">
+    <div class="types"><span v-for="(type, index) in character.types" :key="index" class="type">{{type.type.name}}</span></div>
+    <h5 class="hp-label">HP</h5>
+    <h5 class="hp-value" v-for="(stat, index) in character.stats" :key="index" v-if="stat.stat.name === 'hp'">{{stat.base_stat}}</h5>
+    <h5 class="weight-label">Weight</h5>
+    <h5 class="weight-value">{{character.weight}}</h5>
+    <h5 class="height-label">Height</h5>
+    <h5 class="height-value">{{character.height}}</h5>
+  </div>
+  <div class="loader" v-bind:style="{ display: !isLoading ? 'none': '' }">{{'Loading' + dots}}</div>
 </div>
 </template>
 
@@ -17,14 +21,23 @@ export default {
   props: ["id"],
   data() {
     return {
-      character: {}
+      character: {},
+      isLoading: true,
+      dots: ''
     };
   },
   methods: {
     fetchPokemon(id) {
+      this.isLoading = true;
+      let interval = setInterval(()=>{
+        if(this.dots.length>2) this.dots = '';
+        this.dots += '.';
+      }, 1000)
       fetch("https://pokeapi.co/api/v2/pokemon/" + id + "/", {
         method: "GET"
       }).then((response, error) => {
+        clearInterval(interval);
+        this.isLoading = false;
         response.json().then(json => {
           this.character = json;
         });
@@ -33,7 +46,7 @@ export default {
     switchPokemon() {
       this.fetchPokemon(Math.floor(Math.random() * 151) + 1);
     },
-    capitalise(string) {
+    capitalize(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
   },
@@ -55,13 +68,26 @@ export default {
   text-align: center;
 }
 
+.loader{
+  text-align: center;
+  height: 100%;
+  transform: translateY(50%);
+  font-size: 2.2em;
+  color: #1d3557;
+}
+
 %label-text {
   font-size: 1.3em;
   color: #1d3557;
 }
 
+.wrapper{
+ width: calc(25% - 10px);
+ height: 250px;
+}
+
 .single-char {
-  width: calc(25% - 10px);
+  width: 100%;
   height: 250px;
   background: #e63946;
   border: 2px solid #1d3557;
