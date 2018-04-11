@@ -1,13 +1,13 @@
 <template>
   <div>
-      <h3>Sign in</h3>
+      <h3>Sign up</h3>
       <br>
       <input type="email" placeholder="Email" v-model="email"/>
       <input type="password" placeholder="Password" v-model="password"/>
-      <button @click="signIn">Sign in</button>
+      <button @click="signUp">Sign up</button>
       <p>{{error.message}}</p>
       <br>
-      <router-link to="/signup">Not a user? Create an account here</router-link>
+      <router-link to="/signin">Already a user? Sign in here</router-link>
   </div>
 </template>
 
@@ -25,8 +25,8 @@ export default {
         }
     },
     methods:{
-        signIn(){
-            firebaseApp.auth().signInWithEmailAndPassword(this.email, this.password).catch((error)=>{
+        signUp(){
+            firebaseApp.auth().createUserWithEmailAndPassword(this.email, this.password).catch((error)=>{
                 this.error = error;
             })
         }
