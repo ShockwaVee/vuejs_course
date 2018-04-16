@@ -80,6 +80,7 @@ h2 {
   cursor: pointer;
   font-size: 2em;
   margin-bottom: 6px;
+  color: #40407a;
 }
 .eventForm {
   height: 0px;
@@ -87,14 +88,16 @@ h2 {
   transition: 0.4s;
   width: 450px;
   input {
+    background: #dff9fb;
     width: 100%;
     display: block;
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #40407a;
     margin-bottom: 12px;
     font-family: "Quattrocento Sans", sans-serif;
     font-size: 1.2em;
     box-shadow: none;
+    color: #40407a;
     &.invalid {
       border-bottom: 2px solid red;
     }
@@ -117,5 +120,6 @@ button {
   color: white;
   background: #00def7;
   border-radius: 3px;
+  cursor: pointer;
 }
 </style>

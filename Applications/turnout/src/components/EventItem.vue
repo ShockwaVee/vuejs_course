@@ -23,13 +23,14 @@ export default {
   width: calc(33% - 30px);
   display: inline-block;
   margin: 5px 5px;
-  border: 4px solid black;
+  border: 4px solid #40407a;
   padding: 5px 6px;
   .eventTitle {
     margin-top: 0px;
     margin-bottom: 0px;
     text-transform: uppercase;
     font-size: 1.9em;
+    color: #2f3542;
   }
   .eventDescription {
     margin: 0;
@@ -47,9 +48,10 @@ export default {
       margin-right: 16px;
       display: inline-block;
       text-transform: uppercase;
-      border-right: 1px solid black;
+      border-right: 2px solid #40407a;
       font-weight: 900;
       font-size: 0.95em;
+      color: #2f3542;
     }
   }
 }
